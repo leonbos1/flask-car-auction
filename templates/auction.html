@@ -16,16 +16,20 @@
 
     <main>
         <h2>{{auction.car.brand}} {{auction.car.model}}</h2>
-        <div class="auction">
-            <p>Current bid {{auction.price}}</p>
-            <p>Ends in {{auction.end_date}}</p>
-            <p>Location {{auction.location}}</p>
-            <p>Condition {{auction.car.condition}}</p>
-            <p>Year {{auction.car.year}}</p>
-            <p>Milage {{auction.car.mileage}}</p>
+        <div class="auction-info">
+            <div class="auction-details">
+                <p><strong>Current bid:</strong> {{auction.price}}</p>
+                <p><strong>Ends in:</strong> {{auction.end_date}}</p>
+                <p><strong>Location:</strong> {{auction.location}}</p>
+            </div>
+            <div class="car-details">
+                <p><strong>Condition:</strong> {{auction.car.condition}}</p>
+                <p><strong>Year:</strong> {{auction.car.year}}</p>
+                <p><strong>Mileage:</strong> {{auction.car.mileage}}</p>
+            </div>
         </div>
     </main>
-
+    
     <footer>
         <p>Copyright © 2023 Car Auction</p>
     </footer>

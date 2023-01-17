@@ -15,9 +15,11 @@ class User(db.Model):
 class Car(db.Model):
     __tablename__ = "car"
     id = db.Column(db.Integer, primary_key=True)
-    brand = db.Column(db.String(80), unique=True, nullable=False)
-    model = db.Column(db.String(120), unique=True, nullable=False)
-    year = db.Column(db.Integer, unique=True, nullable=False)
+    brand = db.Column(db.String(80), unique=False, nullable=False)
+    model = db.Column(db.String(120), unique=False, nullable=False)
+    year = db.Column(db.Integer, unique=False, nullable=False)
+    condition = db.Column(db.String(120), unique=False, nullable=False)
+    mileage = db.Column(db.Integer, unique=False, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
 class Auction(db.Model):
@@ -25,6 +27,8 @@ class Auction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     price = db.Column(db.Integer, unique=True, nullable=False)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=False)
+    end_date = db.Column(db.String, unique=False, nullable=False)
+    location = db.Column(db.String, unique=False, nullable=False)
 
 @app.route("/")
 def home():
@@ -51,26 +55,36 @@ def auction(id):
     auction.car.owner = user
 
     return render_template("auction.html", auction=auction)
-    
+
+@app.route("/add_data", methods=["GET"])
 def add_some_data():
-    user1 = User(username="GeertWilders01", email="wilders@pvv.nl", password="drag4wqt5")
-    user2 = User(username="MarkRutte01", email="rutte@vvd.nl", password="45t2g234hyg")
-    db.session.add(user1)
-    db.session.add(user2)
-    db.session.commit()
+    # user1 = User(username="GeertWilders01", email="wilders@pvv.nl", password="drag4wqt5")
+    # user2 = User(username="MarkRutte01", email="rutte@vvd.nl", password="45t2g234hyg")
+    # db.session.add(user1)
+    # db.session.add(user2)
+    # db.session.commit()
 
-    car1 = Car(brand="BMW", model="M3", year=2019, owner_id=user1.id)
-    car2 = Car(brand="Audi", model="A4", year=2018, owner_id=user2.id)
-    db.session.add(car1)
-    db.session.add(car2)
-    db.session.commit()
+    # car1 = Car(brand="BMW", model="M3", year=2008, condition="Good", mileage=150000, owner_id=1)
+    # car2 = Car(brand="Audi", model="A4", year=2010, condition="Good", mileage=100000, owner_id=2)
+    # car3 = Car(brand="Mercedes", model="C200", year=2015, condition="Good", mileage=50000, owner_id=2)
+    # car4 = Car(brand="Audi", model="A3", year=2012, condition="Good", mileage=80000, owner_id=1)
+    # db.session.add(car1)
+    # db.session.add(car2)
+    # db.session.add(car3)
+    # db.session.add(car4)
+    # db.session.commit()
 
-    auction1 = Auction(price=10000, car_id=car1.id)
-    auction2 = Auction(price=20000, car_id=car2.id)
+    auction1 = Auction(price=10000, car_id=1, end_date="2020-12-31", location="Amsterdam")
+    auction2 = Auction(price=15000, car_id=2, end_date="2020-12-31", location="Rotterdam")
+    auction3 = Auction(price=20000, car_id=3, end_date="2020-12-31", location="Utrecht")
+    auction4 = Auction(price=25000, car_id=4, end_date="2020-12-31", location="Amsterdam")
     db.session.add(auction1)
     db.session.add(auction2)
-    
+    db.session.add(auction3)
+    db.session.add(auction4)
     db.session.commit()
+
+    return redirect(url_for("auctions"))
 
 
 if __name__ == "__main__":

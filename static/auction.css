@@ -1,11 +1,64 @@
-.auction {
-    border: 1px solid #e3e3e3;
-    border-radius: 3px;
-    padding: 10px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    width: 80vw;
-    height: 30vh;
-    overflow: hidden;
-    position: relative;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styles */
+header {
+    background-color: #f2f2f2;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+}
+
+/* Navigation styles */
+nav {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav li {
+    margin-right: 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
+main h2 {
+    margin-bottom: 20px;
+}
+
+/* auction info styles */
+.auction-info {
+    display: flex;
+}
+
+.auction-details {
+    flex: 1;
+    margin-right: 20px;
+}
+
+.car-details {
+    flex: 1;
 }
