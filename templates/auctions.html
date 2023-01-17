@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Car Auction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/auctions.css">
+</html>
+</head>
+<body>
+
+    {% include 'navbar.html' %}
+
+    <main>
+        <h2>Featured Auctions</h2>
+        <ul>
+            {% for auction in auctions %}
+            <div class="card">
+                <h3>{{ auction.car.brand }} {{ auction.car.model}}</h3>
+                <p>€ {{ auction.price }}</p>
+                <button><a href="/auction/{{ auction.id }}">View Auction</a></button>
+            </div>
+            {% endfor %}
+        </ul>
+    </main>
+
+    <footer>
+        <p>Copyright © 2023 Ron</p>
+    </footer>
+
+</body>

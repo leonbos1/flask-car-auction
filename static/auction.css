@@ -1,0 +1,11 @@
+.auction {
+    border: 1px solid #e3e3e3;
+    border-radius: 3px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 80vw;
+    height: 30vh;
+    overflow: hidden;
+    position: relative;
+}

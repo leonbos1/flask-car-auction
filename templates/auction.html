@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Car Auction</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/auction.css">
+
+</html>
+</head>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <main>
+        <h2>{{auction.car.brand}} {{auction.car.model}}</h2>
+        <div class="auction">
+            <p>Current bid {{auction.price}}</p>
+            <p>Ends in {{auction.end_date}}</p>
+            <p>Location {{auction.location}}</p>
+            <p>Condition {{auction.car.condition}}</p>
+            <p>Year {{auction.car.year}}</p>
+            <p>Milage {{auction.car.mileage}}</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>Copyright © 2023 Car Auction</p>
+    </footer>
+
+</body>
