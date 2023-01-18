@@ -6,6 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/auction.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+        
 
 </html>
 </head>
@@ -27,11 +32,13 @@
                 <p><strong>Year:</strong> {{auction.car.year}}</p>
                 <p><strong>Mileage:</strong> {{auction.car.mileage}}</p>
             </div>
+            <div data-lon="{{auction.longitute}}" data-lat="{{auction.latitude}}" class="map" id="map"></div>
         </div>
     </main>
-    
+
     <footer>
         <p>Copyright © 2023 Car Auction</p>
     </footer>
 
 </body>
+<script src="/static/auction.js"></script>

@@ -62,3 +62,8 @@ main h2 {
 .car-details {
     flex: 1;
 }
+
+.map {
+    width: 40vw;
+    height: 40vh;
+}
