@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sell a Car</title>
+</head>
+
+</html>
+
+<body>
+
+    {% include 'navbar.html' %}
+
+    <h1>Sell a Car</h1>
+
+    <form action="sell" method="post">
+
+        <select name="car">
+            {% for car in cars %}
+            <option value="{{ car.id }}">{{ car.brand }} {{ car.model }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="text" name="price" placeholder="Price" />
+
+        <input type="text" name="end_date" placeholder="End Date" />
+
+        <input type="text" name="location" placeholder="Location" />
+
+        <input type="text" name="longitute" placeholder="Longitute" />
+
+        <input type="text" name="latitude" placeholder="Latitude" />
+
+        <button type="submit">Sell</button>
+
+    </form>
+
+</body>
+
+</html>

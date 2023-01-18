@@ -24,8 +24,12 @@
         <div class="auction-info">
             <div class="auction-details">
                 <p><strong>Current bid:</strong> {{auction.price}}</p>
+                {% if auction.bidder %}
+                <p><strong>Highest bidder:</strong> {{auction.bidder_name.username}}</p>
+                {% endif %}
                 <p><strong>Ends in:</strong> {{auction.end_date}}</p>
                 <p><strong>Location:</strong> {{auction.location}}</p>
+                <button class="bid"><a href="/auction/{{auction.id}}/bid?amount={{auction.price + 500}}">Bid {{auction.price + 500}}</a></button>
             </div>
             <div class="car-details">
                 <p><strong>Condition:</strong> {{auction.car.condition}}</p>

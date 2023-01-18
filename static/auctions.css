@@ -9,12 +9,11 @@ ul {
     display: flex;
 }
 
-.row {
+.content {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-
-    width: 95%;
+    width: 80%;
     margin: 0 auto;
 }
 
@@ -24,25 +23,8 @@ ul {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     margin: 10px;
     padding: 20px;
-    width: 40vw;
+    width: 35vw;
     height: 50vh;
     text-align: center;
     transition: 0.3s;
-}
-
-button {
-    margin: 5px 0;
-    padding: 7px 15px;
-    background-color: #0053b3;
-    border: none;
-    color: #fff;
-    font-size: 14px;
-    box-shadow: 0 7px 0 -4px #b7b7b7;
-    transition: all .1s ease;
-}
-
-button:hover {
-    /*make the button dropdown a bit so it goes over the shadow*/
-    margin: 10px 0;
-    box-shadow: none
 }
