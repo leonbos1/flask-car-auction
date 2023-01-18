@@ -1,8 +1,11 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, session
 from flask_sqlalchemy import SQLAlchemy
+from functools import wraps
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///auctions.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'EFG#$ty45wg'
 db = SQLAlchemy(app)
 
 class User(db.Model):
@@ -88,6 +91,70 @@ def add_some_data():
 
     return redirect(url_for("auctions"))
 
+
+@app.route("/login", methods=["GET"])
+def login():
+    return render_template("login.html")
+
+@app.route("/login", methods=["POST"])
+def login_post():
+    username = request.form.get("username")
+    password = request.form.get("password")
+
+    user = User.query.filter_by(username=username).first()
+
+    if not user or not password == user.password:
+        flash("Please check your login details and try again.")
+        return redirect(url_for("login"))
+
+    login_user(user)
+
+    return redirect(url_for("auctions"))
+
+@app.route("/register", methods=["GET"])
+def register():
+    return render_template("register.html")
+
+@app.route("/register", methods=["POST"])
+def register_post():
+    username = request.form.get("username")
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user = User.query.filter_by(username=username).first()
+    if user:
+        flash("Username already exists")
+        return redirect(url_for("register"))
+
+    user = User(username=username, email=email, password=password)
+    db.session.add(user)
+    db.session.commit()
+
+    return redirect(url_for("auctions"))
+
+def login_user(user):
+    session.clear()
+    session["user_id"] = user.id
+
+def logout_user():
+    session.clear()
+
+def is_logged_in():
+    return session.get("user_id") is not None
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect(url_for("login", next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+@app.route("/profile")
+@login_required
+def profile():
+    user = User.query.filter_by(id=session["user_id"]).first()
+    return render_template("profile.html", user=user)
 
 if __name__ == "__main__":
     with app.app_context():
