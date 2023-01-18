@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, Blueprint
 from flask_sqlalchemy import SQLAlchemy
 from functools import wraps
 
@@ -7,16 +7,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///auctions.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'EFG#$ty45wg'
 db = SQLAlchemy(app)
-
-
-def login_required(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if session.get("user_id") is None:
-            return redirect(url_for("login", next=request.url))
-        return f(*args, **kwargs)
-    return decorated_function
-
 
 class User(db.Model):
     __tablename__ = "user"
@@ -36,7 +26,6 @@ class Car(db.Model):
     mileage = db.Column(db.Integer, unique=False, nullable=False)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-
 class Auction(db.Model):
     __tablename__ = "auction"
     id = db.Column(db.Integer, primary_key=True)
@@ -49,10 +38,18 @@ class Auction(db.Model):
     bidder = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
 
 
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get("user_id") is None:
+            return redirect(url_for("login", next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 @app.route("/")
 def home():
     return render_template("home.html")
-
 
 @app.route("/auctions", methods=["GET"])
 def auctions():
@@ -65,7 +62,6 @@ def auctions():
         auction.car.owner = user
 
     return render_template("auctions.html", auctions=auctions)
-
 
 @app.route("/auction/<int:id>", methods=["GET"])
 def auction(id):
@@ -89,8 +85,6 @@ def bid(id):
     auction.car = car
     auction.car.owner = user
     auction.price = new_price
-
-    print(session)
 
     if session.get("user_id"):
         user_id = session["user_id"]

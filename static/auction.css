@@ -43,6 +43,8 @@ nav a {
 /* Main content styles */
 main {
     padding: 20px;
+    width: 80%;
+    margin: 0 auto;
 }
 
 main h2 {
