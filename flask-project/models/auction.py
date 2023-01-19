@@ -3,7 +3,7 @@ from ..extensions import db
 class Auction(db.Model):
     __tablename__ = "auction"
     id = db.Column(db.Integer, primary_key=True)
-    price = db.Column(db.Integer, unique=True, nullable=False)
+    price = db.Column(db.Integer, unique=False, nullable=False)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=False)
     end_date = db.Column(db.String, unique=False, nullable=False)
     end_time = db.Column(db.String, unique=False, nullable=False)

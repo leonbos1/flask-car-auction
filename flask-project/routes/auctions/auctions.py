@@ -23,19 +23,15 @@ def get():
 
 def get_remaining_time(end_date, end_time):
     
+    #date format = 19-1-2023 
+    #time format = 12:00
     end_date = end_date.split("-")
     end_time = end_time.split(":")
-    end_date = datetime(int(end_date[0]), int(end_date[1]), int(end_date[2]), int(end_time[0]), int(end_time[1]))
+    end_date = datetime(int(end_date[2]), int(end_date[1]), int(end_date[0]), int(end_time[0]), int(end_time[1]))
     remaining_time = end_date - datetime.now()
-    remaining_time = str(remaining_time).split(" ")
 
-    #remove microseconds
-    remaining_time[2] = remaining_time[2].split(".")[0]
+    remaining_time = str(remaining_time).split(".")[0]
 
-    remaining_time = remaining_time[0] + " days " + remaining_time[2]
-
-    if remaining_time[0] == "0":
-        remaining_time = remaining_time[2:]
-
+    remaining_time = remaining_time.replace(",", "")
 
     return remaining_time

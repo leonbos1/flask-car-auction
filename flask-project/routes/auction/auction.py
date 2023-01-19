@@ -7,6 +7,9 @@ from ...models.user import User
 
 from ..auth.auth import login_required
 
+import requests
+import json
+
 auction = Blueprint("auction", __name__, static_folder="static", template_folder="templates")
 
 @auction.route("/<int:id>", methods=["GET"])
@@ -59,13 +62,25 @@ def sell_car():
     car_id = request.form.get("car")
     price = request.form.get("price")
     end_date = request.form.get("end_date")
+    end_time = request.form.get("end_time")
     location = request.form.get("location")
-    longitute = request.form.get("longitute")
-    latitude = request.form.get("latitude")
+    
+    latitude, longitute = get_latitude_longitude(location)
 
-    auction = Auction(price=price, car_id=car_id, end_date=end_date,
+    auction = Auction(price=price, car_id=car_id, end_date=end_date, end_time=end_time,
                       location=location, longitute=longitute, latitude=latitude)
     db.session.add(auction)
     db.session.commit()
 
     return redirect(url_for("auctions.get"))
+
+def get_latitude_longitude(location):
+
+    url = f"https://geocode.maps.co/search?q={location}"
+    response = requests.get(url)
+    json = response.json()
+
+    latitude = json[0]["lat"]
+    longitude = json[0]["lon"]
+
+    return latitude, longitude

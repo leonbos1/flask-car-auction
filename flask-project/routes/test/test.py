@@ -46,13 +46,13 @@ def add_some_data():
     db.session.add(car8)
     db.session.commit()
 
-    auction1 = Auction(price=10000, car_id=1, end_date="2023-1-21", end_time="23:59",
+    auction1 = Auction(price=10000, car_id=1, end_date="20-1-2023", end_time="23:59",
                        location="Amsterdam", longitute=4.895168, latitude=52.370216)
-    auction2 = Auction(price=20000, car_id=2, end_date="2023-1-21", end_time="23:59",
+    auction2 = Auction(price=20000, car_id=2, end_date="20-1-2023", end_time="23:59",
                        location="Rotterdam", longitute=4.47917, latitude=51.9225)
-    auction3 = Auction(price=30000, car_id=3, end_date="2023-1-21", end_time="23:59",
+    auction3 = Auction(price=30000, car_id=3, end_date="20-1-2023", end_time="23:59",
                        location="Utrecht", longitute=5.12142, latitude=52.09083)
-    auction4 = Auction(price=40000, car_id=4, end_date="2023-1-21", end_time="23:59",
+    auction4 = Auction(price=40000, car_id=4, end_date="20-1-2023", end_time="23:59",
                        location="Den Haag", longitute=4.3007, latitude=52.0705)
     db.session.add(auction1)
     db.session.add(auction2)
