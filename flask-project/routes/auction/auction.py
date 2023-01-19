@@ -37,9 +37,9 @@ def bid(id):
         user = User.query.filter_by(id=user_id).first()
         auction.bidder = user.id
         db.session.commit()
-        return redirect(url_for("auction", id=id))
+        return redirect(url_for("auction.get", id=id))
     else:
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
 
 
 @login_required
@@ -68,4 +68,4 @@ def sell_car():
     db.session.add(auction)
     db.session.commit()
 
-    return redirect(url_for("auctions"))
+    return redirect(url_for("auctions.get"))

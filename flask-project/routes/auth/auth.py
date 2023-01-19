@@ -6,7 +6,9 @@ from ...models.auction import Auction
 from ...models.car import Car
 from ...models.user import User
 
-auth = Blueprint("auth", __name__, static_folder="static", template_folder="templates")
+auth = Blueprint("auth", __name__, static_folder="static",
+                 template_folder="templates")
+
 
 def login_required(f):
     @wraps(f)
@@ -15,6 +17,7 @@ def login_required(f):
             return redirect(url_for("login", next=request.url))
         return f(*args, **kwargs)
     return decorated_function
+
 
 @auth.route("/login", methods=["GET"])
 def login():
@@ -30,11 +33,11 @@ def login_post():
 
     if not user or not password == user.password:
         flash("Please check your login details and try again.")
-        return redirect(url_for("login"))
+        return redirect(url_for("auth.login"))
 
     login_user(user)
 
-    return redirect(url_for("auctions"))
+    return redirect(url_for("auctions.get"))
 
 
 @auth.route("/register", methods=["GET"])
@@ -51,13 +54,13 @@ def register_post():
     user = User.query.filter_by(username=username).first()
     if user:
         flash("Username already exists")
-        return redirect(url_for("register"))
+        return redirect(url_for("auth.register"))
 
     user = User(username=username, email=email, password=password)
     db.session.add(user)
     db.session.commit()
 
-    return redirect(url_for("auctions"))
+    return redirect(url_for("auth.auctions"))
 
 
 def login_user(user):

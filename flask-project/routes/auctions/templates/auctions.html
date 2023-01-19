@@ -23,6 +23,7 @@
             <div class="card">
                 <h3>{{ auction.car.brand }} {{ auction.car.model}}</h3>
                 <p>Highest bid: € {{ auction.price }}</p>
+                <p>Remaining time: {{auction.remaining_time}}</p>
                 <button><a href="/auction/{{ auction.id }}">View Auction</a></button>
             </div>
 

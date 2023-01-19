@@ -6,6 +6,7 @@ class Auction(db.Model):
     price = db.Column(db.Integer, unique=True, nullable=False)
     car_id = db.Column(db.Integer, db.ForeignKey('car.id'), nullable=False)
     end_date = db.Column(db.String, unique=False, nullable=False)
+    end_time = db.Column(db.String, unique=False, nullable=False)
     location = db.Column(db.String, unique=False, nullable=False)
     longitute = db.Column(db.Float, unique=False, nullable=False)
     latitude = db.Column(db.Float, unique=False, nullable=False)
