@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/auctions.css">
+    <script src="/static/auctions.js"></script>
 
 </html>
 </head>
@@ -22,8 +23,8 @@
 
             <div class="card">
                 <h3>{{ auction.car.brand }} {{ auction.car.model}}</h3>
-                <p>Highest bid: € {{ auction.price }}</p>
-                <p>Remaining time: {{auction.remaining_time}}</p>
+                <p><strong>Highest bid: € </strong>{{ auction.price }}</p>
+                <p class="remaining"><strong>Ends in: </strong>{{auction.remaining_time}}</p>
                 <button><a href="/auction/{{ auction.id }}">View Auction</a></button>
             </div>
 

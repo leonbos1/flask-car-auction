@@ -4,6 +4,8 @@ from ...extensions import db
 from ...models.auction import Auction
 from ...models.car import Car
 from ...models.user import User
+from ...utils.time import get_remaining_time, date_is_future, get_future_date
+from ...utils.location import get_latitude_longitude
 
 from ..auth.auth import login_required
 
@@ -21,8 +23,13 @@ def get(id):
     auction.car = car
     auction.car.owner = user
 
-    return render_template("auction.html", auction=auction)
+    auction.remaining_time = get_remaining_time(auction.end_date, auction.end_time)
 
+    if session.get("user_id"):
+        user_id = session["user_id"]
+        user = User.query.filter_by(id=user_id).first()
+
+    return render_template("auction.html", auction=auction, current_user=user)
 
 @auction.route("/<int:id>/bid", methods=["GET"])
 def bid(id):
@@ -48,6 +55,9 @@ def bid(id):
 @login_required
 @auction.route("/sell", methods=["GET"])
 def sell():
+    if not session.get("user_id"):
+        return redirect(url_for("auth.login"))
+
     user = User.query.filter_by(id=session["user_id"]).first()
     cars = Car.query.filter_by(owner_id=user.id).all()
 
@@ -64,23 +74,15 @@ def sell_car():
     end_date = request.form.get("end_date")
     end_time = request.form.get("end_time")
     location = request.form.get("location")
+
+    if not date_is_future(end_date):
+        end_date = get_future_date()
     
     latitude, longitute = get_latitude_longitude(location)
 
     auction = Auction(price=price, car_id=car_id, end_date=end_date, end_time=end_time,
-                      location=location, longitute=longitute, latitude=latitude)
+                      location=location, longitute=longitute, latitude=latitude, status="active")
     db.session.add(auction)
     db.session.commit()
 
     return redirect(url_for("auctions.get"))
-
-def get_latitude_longitude(location):
-
-    url = f"https://geocode.maps.co/search?q={location}"
-    response = requests.get(url)
-    json = response.json()
-
-    latitude = json[0]["lat"]
-    longitude = json[0]["lon"]
-
-    return latitude, longitude

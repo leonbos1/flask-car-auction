@@ -10,7 +10,8 @@
         integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
         integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
-        
+    <script src="/static/auctions.js"></script>
+
 
 </html>
 </head>
@@ -27,9 +28,12 @@
                 {% if auction.bidder %}
                 <p><strong>Highest bidder:</strong> {{auction.bidder_name.username}}</p>
                 {% endif %}
-                <p><strong>Ends in:</strong> {{auction.end_date}}</p>
+                <p class="remaining"><strong>Ends in:</strong> {{auction.remaining_time}}</p>
                 <p><strong>Location:</strong> {{auction.location}}</p>
-                <button class="bid"><a href="/auction/{{auction.id}}/bid?amount={{auction.price + 500}}">Bid {{auction.price + 500}}</a></button>
+                {% if auction.car.owner_id != current_user.id and auction.bidder != current_user.id %}
+                <button class="bid"><a href="/auction/{{auction.id}}/bid?amount={{auction.price + 500}}">Bid
+                        {{auction.price + 500}}</a></button>
+                {% endif %}
             </div>
             <div class="car-details">
                 <p><strong>Condition:</strong> {{auction.car.condition}}</p>

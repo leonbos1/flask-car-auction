@@ -69,3 +69,7 @@ main h2 {
     width: 40vw;
     height: 40vh;
 }
+
+.disabled {
+    opacity: 0.5;
+}

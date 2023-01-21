@@ -10,10 +10,10 @@ test = Blueprint("test", __name__, static_folder="static", template_folder="temp
 
 @test.route("/add_data", methods=["GET"])
 def add_some_data():
-    user1 = User(username="GeertWilders01",
-                 email="wilders@pvv.nl", password="drag4wqt5")
-    user2 = User(username="MarkRutte01",
-                 email="rutte@vvd.nl", password="45t2g234hyg")
+    user1 = User(username="geert",
+                 email="geert", password="geert")
+    user2 = User(username="test",
+                 email="test", password="test")
     user3 = User(username="leon", email="leon", password="leon")
     db.session.add(user1)
     db.session.add(user2)
@@ -44,20 +44,6 @@ def add_some_data():
     db.session.add(car6)
     db.session.add(car7)
     db.session.add(car8)
-    db.session.commit()
-
-    auction1 = Auction(price=10000, car_id=1, end_date="20-1-2023", end_time="23:59",
-                       location="Amsterdam", longitute=4.895168, latitude=52.370216)
-    auction2 = Auction(price=20000, car_id=2, end_date="20-1-2023", end_time="23:59",
-                       location="Rotterdam", longitute=4.47917, latitude=51.9225)
-    auction3 = Auction(price=30000, car_id=3, end_date="20-1-2023", end_time="23:59",
-                       location="Utrecht", longitute=5.12142, latitude=52.09083)
-    auction4 = Auction(price=40000, car_id=4, end_date="20-1-2023", end_time="23:59",
-                       location="Den Haag", longitute=4.3007, latitude=52.0705)
-    db.session.add(auction1)
-    db.session.add(auction2)
-    db.session.add(auction3)
-    db.session.add(auction4)
     db.session.commit()
 
     return redirect(url_for("auctions.get"))

@@ -10,4 +10,5 @@ class Auction(db.Model):
     location = db.Column(db.String, unique=False, nullable=False)
     longitute = db.Column(db.Float, unique=False, nullable=False)
     latitude = db.Column(db.Float, unique=False, nullable=False)
+    status = db.Column(db.String, unique=False, nullable=False)
     bidder = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)

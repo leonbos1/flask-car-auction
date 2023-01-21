@@ -6,6 +6,9 @@ from .routes.test.test import test
 from .routes.home.home import home
 
 from .extensions import db
+from .services.auction_service import check_expired_auctions
+
+import celery
 
 def create_app():
     app = Flask(__name__)
