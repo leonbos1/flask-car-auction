@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-def get_remaining_time(end_date, end_time):
+def get_remaining_time(end_date: str, end_time: str):
     
     #date format = 2023-01-28 
     #time format = 12:00
@@ -16,7 +16,7 @@ def get_remaining_time(end_date, end_time):
 
     return remaining_time
 
-def date_is_future(date):
+def date_is_future(date: str):
     """checks if the date is in the future
     """
     date = date.split("-")

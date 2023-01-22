@@ -4,11 +4,10 @@ from .routes.auction.auction import auction
 from .routes.auth.auth import auth
 from .routes.test.test import test
 from .routes.home.home import home
+from .routes.profile.profile import profile
 
 from .extensions import db
 from .services.auction_service import check_expired_auctions
-
-import celery
 
 def create_app():
     app = Flask(__name__)
@@ -26,5 +25,6 @@ def create_app():
     app.register_blueprint(auth, url_prefix="")
     app.register_blueprint(test, url_prefix="/test")
     app.register_blueprint(home, url_prefix="")
+    app.register_blueprint(profile, url_prefix="/profile")
 
     return app

@@ -1,6 +1,6 @@
 from requests import get
 
-def get_latitude_longitude(location):
+def get_latitude_longitude(location: str):
 
     url = f"https://geocode.maps.co/search?q={location}"
     response = get(url)

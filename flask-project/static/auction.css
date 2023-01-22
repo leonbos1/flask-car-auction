@@ -41,13 +41,16 @@ nav a {
 }
 
 /* Main content styles */
-main {
+.content {
     padding: 20px;
     width: 80%;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+
 }
 
-main h2 {
+.content h2 {
     margin-bottom: 20px;
 }
 
@@ -72,4 +75,25 @@ main h2 {
 
 .disabled {
     opacity: 0.5;
+}
+
+.car-images {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 80%;
+    margin-top: 2vh;
+}
+
+img {
+    width: 50%;
+}
+
+.car-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 50%;
+    padding: 20px;
 }

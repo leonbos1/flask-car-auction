@@ -4,6 +4,7 @@ from ...extensions import db
 from ...models.auction import Auction
 from ...models.car import Car
 from ...models.user import User
+from ...models.images import Images
 from ...utils.time import get_remaining_time, date_is_future, get_future_date
 from ...utils.location import get_latitude_longitude
 
@@ -11,6 +12,7 @@ from ..auth.auth import login_required
 
 import requests
 import json
+import base64
 
 auction = Blueprint("auction", __name__, static_folder="static", template_folder="templates")
 
@@ -29,7 +31,11 @@ def get(id):
         user_id = session["user_id"]
         user = User.query.filter_by(id=user_id).first()
 
-    return render_template("auction.html", auction=auction, current_user=user)
+    images = Images.query.filter_by(car_id=car.id).all()
+    for image in images:
+        image.data = base64.b64encode(image.image).decode('ascii')
+
+    return render_template("auction.html", auction=auction, current_user=user, images=images)
 
 @auction.route("/<int:id>/bid", methods=["GET"])
 def bid(id):
@@ -59,10 +65,14 @@ def sell():
         return redirect(url_for("auth.login"))
 
     user = User.query.filter_by(id=session["user_id"]).first()
+
+    if not user:
+        return redirect(url_for("auth.login"))
+
     cars = Car.query.filter_by(owner_id=user.id).all()
 
     cars = [car for car in cars if not Auction.query.filter_by(
-        car_id=car.id).first()]
+        car_id=car.id).filter_by(status="active").first()]
 
     return render_template("sell.html", cars=cars)
 
@@ -79,6 +89,22 @@ def sell_car():
         end_date = get_future_date()
     
     latitude, longitute = get_latitude_longitude(location)
+
+    already_auctioned = Auction.query.filter_by(car_id=car_id).first()
+
+    if already_auctioned:
+        if (already_auctioned.status == "active"):
+            return redirect(url_for("auctions.get"))
+        else:
+            already_auctioned.status = "active"
+            already_auctioned.price = price
+            already_auctioned.end_date = end_date
+            already_auctioned.end_time = end_time
+            already_auctioned.location = location
+            already_auctioned.latitude = latitude
+            already_auctioned.longitute = longitute
+            db.session.commit()
+            return redirect(url_for("auctions.get"))
 
     auction = Auction(price=price, car_id=car_id, end_date=end_date, end_time=end_time,
                       location=location, longitute=longitute, latitude=latitude, status="active")
