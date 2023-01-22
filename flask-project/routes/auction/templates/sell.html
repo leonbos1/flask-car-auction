@@ -12,7 +12,7 @@
 
     <h1>Sell a Car</h1>
 
-    <form action="sell" method="post">
+    <form action="sell" method="post" enctype="multipart/form-data">
 
         <select name="car">
             {% for car in cars %}
@@ -27,6 +27,8 @@
         <input type="time" name="end_time" placeholder="End Time" />
 
         <input type="text" name="location" placeholder="Location" />
+
+        <input type="file" name="images" multiple placeholder="Images" />
 
         <button type="submit">Sell</button>
 

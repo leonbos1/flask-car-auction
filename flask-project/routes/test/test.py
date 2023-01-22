@@ -30,6 +30,18 @@ def add_some_data():
     db.session.add(image5)
     db.session.commit()
 
+    image6 = Images(car_id=2, image=open(directory + "a4.1.png", "rb").read())
+    image7 = Images(car_id=2, image=open(directory + "a4.2.png", "rb").read())
+    image8 = Images(car_id=2, image=open(directory + "a4.3.png", "rb").read())
+    image9 = Images(car_id=2, image=open(directory + "a4.4.png", "rb").read())
+    image10 = Images(car_id=2, image=open(directory + "a4.5.png", "rb").read())
+    db.session.add(image6)
+    db.session.add(image7)
+    db.session.add(image8)
+    db.session.add(image9)
+    db.session.add(image10)
+    db.session.commit()
+
     return redirect(url_for("auctions.get"))
 
 
@@ -46,7 +58,7 @@ def add_users():
 
 
 def add_cars():
-    car1 = Car(brand="BMW", model="M3", year=2008,
+    car1 = Car(brand="BMW", model="M3", year=2017,
                condition="Good", mileage=150000, owner_id=1)
     car2 = Car(brand="Audi", model="A4", year=2010,
                condition="Good", mileage=100000, owner_id=2)

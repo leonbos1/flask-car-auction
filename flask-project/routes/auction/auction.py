@@ -84,6 +84,12 @@ def sell_car():
     end_date = request.form.get("end_date")
     end_time = request.form.get("end_time")
     location = request.form.get("location")
+    images = request.files.getlist("images")
+
+    for image in images:
+        img = Images(car_id=car_id, image=image.read())
+        db.session.add(img)
+        db.session.commit()
 
     if not date_is_future(end_date):
         end_date = get_future_date()
