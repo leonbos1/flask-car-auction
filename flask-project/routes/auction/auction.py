@@ -47,13 +47,17 @@ def bid(id):
     auction.car = car
     auction.car.owner = user
     auction.price = new_price
+    auction.amount_of_bids += 1
 
     if session.get("user_id"):
+        
         user_id = session["user_id"]
         user = User.query.filter_by(id=user_id).first()
         auction.bidder = user.id
         db.session.commit()
+
         return redirect(url_for("auction.get", id=id))
+
     else:
         return redirect(url_for("auth.login"))
 
@@ -113,7 +117,7 @@ def sell_car():
             return redirect(url_for("auctions.get"))
 
     auction = Auction(price=price, car_id=car_id, end_date=end_date, end_time=end_time,
-                      location=location, longitute=longitute, latitude=latitude, status="active")
+                      location=location, longitute=longitute, latitude=latitude, status="active", amount_of_bids=0)
     db.session.add(auction)
     db.session.commit()
 

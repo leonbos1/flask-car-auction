@@ -1,11 +1,24 @@
-.card {
-    margin: 0 auto;
-    float: none; 
-    margin-bottom: 10px; 
-}
+/*2 cards next to eachother in the content*/
 
 .content {
     display: flex;
-    flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+}
+
+.card {
+    width: 45%;
+    margin-bottom: 75px;
+}
+
+.profile-info {
+    width: 100%;
+}
+
+img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    border-radius: 5%;
 }
