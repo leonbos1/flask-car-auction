@@ -2,8 +2,10 @@ from selenium import webdriver
 from time import sleep
 import requests
 import sqlite3
+import datetime
 
 from car import Car
+from requests import get
 
 AUTOSCOUT_URL = "https://www.autoscout24.com/"
 SYNC = True
@@ -100,8 +102,8 @@ def save_cars_to_db(cars: list):
     c = conn.cursor()
 
     for car in cars:
-        c.execute("INSERT INTO car (guid, brand, model,year,condition,mileage,owner_id) VALUES (?, ?, ?, ?, ?, ?, ?)",
-                  (car.guid, car.brand, car.model, car.first_registration, car.condition, car.mileage, 1))
+        c.execute("INSERT INTO car (guid, brand, model,year,condition,mileage) VALUES (?, ?, ?, ?, ?, ?)",
+                  (car.guid, car.brand, car.model, car.first_registration, car.condition, car.mileage))
         conn.commit()
         print(f"Added {car.brand} {car.model} to database")
 
@@ -112,6 +114,33 @@ def save_cars_to_db(cars: list):
                   (car_id, car.image))
         conn.commit()
         print(f"Added image for {car.brand} {car.model} to database")
+
+    for car in cars:
+        car_id = c.execute("SELECT id FROM car WHERE guid = ?",
+                           (car.guid,)).fetchone()[0]
+        end_date = datetime.datetime.now() + datetime.timedelta(days=1)
+        end_time = datetime.datetime.now() + datetime.timedelta(hours=1)
+        end_date = end_date.strftime("%Y-%m-%d")
+        end_time = end_time.strftime("%H:%M")
+
+        latitude, longitude = get_latitude_longitude(car.location)
+
+        c.execute("INSERT INTO auction (car_id, price, end_date, end_time, location, longitute, latitude, status, amount_of_bids) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                  (car_id, car.price, end_date, end_time, car.location, longitude, latitude, "pending", 0))
+        conn.commit()
+        print(f"Added auction for {car.brand} {car.model} to database")
+
+
+def get_latitude_longitude(location: str):
+
+    url = f"https://geocode.maps.co/search?q={location}"
+    response = get(url)
+    json = response.json()
+
+    latitude = json[0]["lat"]
+    longitude = json[0]["lon"]
+
+    return latitude, longitude
 
 
 if __name__ == "__main__":

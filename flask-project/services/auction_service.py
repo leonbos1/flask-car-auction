@@ -2,6 +2,29 @@ from time import sleep
 import sqlite3
 
 from datetime import datetime
+from threading import Thread
+
+from random import randint
+
+def start_new_auctions():
+    conn = sqlite3.connect('../../instance/auctions.db')
+    c = conn.cursor()
+    print("Starting auction service...")
+
+    while True:
+        print("Checking for new auctions...")
+
+        c.execute("SELECT * FROM auction WHERE status = 'pending'")
+
+        pending_auctions = c.fetchall()
+
+        for auction in pending_auctions:
+            auction.start_date = datetime.now().strftime("%Y-%m-%d")
+            auction.start_time = datetime.now().strftime("%H:%M")
+            auction.status = "active"
+
+            sleep(randint(20, 120))
+
 
 def check_expired_auctions():
     conn = sqlite3.connect('../../instance/auctions.db')
@@ -24,14 +47,6 @@ def check_expired_auctions():
             current_date = datetime.now().strftime("%Y-%m-%d")
             current_time = datetime.now().strftime("%H:%M")
 
-    #         current_date = datetime.strptime(current_date, "%Y-%m-%d")
-    #         auction_end_date = datetime.strptime(auction_end_date, "%Y-%m-%d")
-
-    #         current_time = datetime.strptime(current_time, "%H:%M")
-    #         auction_end_time = datetime.strptime(auction_end_time, "%H:%M")
-
-    #         print(auction_end_date < current_date)
-
             if auction_end_date < current_date:
                 is_expired = True
 
@@ -52,7 +67,10 @@ def check_expired_auctions():
         sleep(5)
 
 def main():
-    check_expired_auctions()
+    t1 = Thread(target=check_expired_auctions)
+    t2 = Thread(target=start_new_auctions)
+    t1.start()
+    t2.start()
 
 if __name__ == "__main__":
     main()
