@@ -19,6 +19,7 @@
                 <div class="auction">
                     <h3>{{ auction.Car.brand }}  {{ auction.Car.model}}</h3>
                     <p>Current bid: € {{ auction.Auction.price }}</p>
+                    <img src="data:image/png;base64,{{ auction.Car.image }}" alt="{{auction.Car.brand}} {{auction.Car.model}}">
                     <button><a href="/auction/{{ auction.Auction.id }}">View Auction</a></button>
                 </div>
             {% endfor %}

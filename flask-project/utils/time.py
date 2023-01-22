@@ -2,16 +2,24 @@ from datetime import datetime, timedelta
 
 def get_remaining_time(end_date: str, end_time: str):
     
-    #date format = 2023-01-28 
-    #time format = 12:00
     end_date = end_date.split("-")
     end_time = end_time.split(":")
+
     end_date = datetime(int(end_date[0]), int(end_date[1]), int(end_date[2]), int(end_time[0]), int(end_time[1]))
+    print(end_date)
     remaining_time = end_date - datetime.now()
 
     remaining_time = str(remaining_time).split(".")[0]
 
-    if remaining_time == "0:00:00":
+    #make hours, minutes, seconds 2 digits
+    remaining_time = remaining_time.split(":")
+    for i in range(len(remaining_time)):
+        if "day, 0" in remaining_time[i]:
+            remaining_time[i] = remaining_time[i].replace("day, 0", "day, 00")
+    
+    remaining_time = ":".join(remaining_time)
+
+    if remaining_time == "00:00:00":
         remaining_time = "Auction has ended"
 
     return remaining_time

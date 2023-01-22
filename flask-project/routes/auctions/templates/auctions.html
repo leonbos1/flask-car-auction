@@ -21,7 +21,7 @@
         <div class="content">
             {% for auction in auctions %}
 
-            {% if 1==1 %}
+            {% if auction.status == 'active' %}
 
             <div class="card">
                 <h3>{{ auction.car.brand }} {{ auction.car.model}}</h3>

@@ -45,8 +45,9 @@ def bid(id):
     auction = Auction.query.filter_by(id=id).first()
     car = Car.query.filter_by(id=auction.car_id).first()
     user = User.query.filter_by(id=car.owner_id).first()
+    current_user = User.query.filter_by(id=session["user_id"]).first()    
 
-    if new_price > user.wallet or new_price <= auction.price:
+    if new_price > current_user.wallet or new_price <= auction.price:
         return redirect(url_for("auction.get", id=id))
 
     auction.car = car
@@ -56,7 +57,7 @@ def bid(id):
         previous_bidder = User.query.filter_by(id=auction.bidder).first()
         previous_bidder.wallet += auction.price
         
-    current_user = User.query.filter_by(id=session["user_id"]).first()    
+    
     current_user.wallet -= new_price
     auction.price = new_price
     auction.bidder = current_user.id

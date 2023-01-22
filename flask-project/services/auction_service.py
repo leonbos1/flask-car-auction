@@ -1,7 +1,7 @@
 from time import sleep
 import sqlite3
 
-from datetime import datetime
+from datetime import datetime, timedelta
 from threading import Thread
 
 from random import randint
@@ -19,9 +19,16 @@ def start_new_auctions():
         pending_auctions = c.fetchall()
 
         for auction in pending_auctions:
-            auction.start_date = datetime.now().strftime("%Y-%m-%d")
-            auction.start_time = datetime.now().strftime("%H:%M")
-            auction.status = "active"
+            end_date = datetime.now().strftime("%Y-%m-%d")
+            end_date = datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=1)
+            end_date = end_date.strftime("%Y-%m-%d")
+
+            end_time = datetime.now().strftime("%H:%M")
+            end_time = datetime.strptime(end_time, "%H:%M") + timedelta(minutes=5)
+            end_time = end_time.strftime("%H:%M")
+
+            c.execute("UPDATE auction SET status = 'active', end_date = ?, end_time = ? WHERE id = ?", (end_date, end_time, auction[0]))
+            conn.commit()
 
             sleep(randint(20, 120))
 

@@ -31,6 +31,19 @@ function updateTimer() {
                 document.getElementsByClassName("bid")[0].disabled = true;
                 return;
             }
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (hours < 10) {
+                hours = "0" + hours;
+            }
+            if (days == 1) {
+                element.innerHTML = `<strong>Ends in: </strong>${days} day, ${hours}:${minutes}:${seconds}`;
+                return;
+            }
             element.innerHTML = `<strong>Ends in: </strong>${days} days, ${hours}:${minutes}:${seconds}`;
         }
         else {
@@ -57,6 +70,16 @@ function updateTimer() {
                 element.innerText = "Auction is over";
                 document.getElementsByClassName("bid")[0].disabled = true;
                 return;
+            }
+            //if seconds is 1 digit, add a 0 in front
+            if (seconds < 10) {
+                seconds = "0" + seconds;
+            }
+            if (minutes < 10) {
+                minutes = "0" + minutes;
+            }
+            if (hours < 10) {
+                hours = "0" + hours;
             }
             element.innerHTML = `<strong>Ends in: </strong>${hours}:${minutes}:${seconds}`;
         }
