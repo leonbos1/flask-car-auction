@@ -9,17 +9,23 @@
 <body>
     {% include 'navbar.html' %}
 
-    <main>
+    <div class="content">
         <h2>Featured Auctions</h2>
         <p>Here are some of the most popular auctions</p>
         
         <div>
 
-            
+            {% for auction in auctions %}
+                <div class="auction">
+                    <h3>{{ auction.Car.brand }}  {{ auction.Car.model}}</h3>
+                    <p>Current bid: € {{ auction.Auction.price }}</p>
+                    <button><a href="/auction/{{ auction.Auction.id }}">View Auction</a></button>
+                </div>
+            {% endfor %}
 
         </div>
 
-    </main>
+    </div>
         <p>Copyright © 2023 Car Auction</p>
 
 </body>

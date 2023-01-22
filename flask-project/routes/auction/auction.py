@@ -37,29 +37,35 @@ def get(id):
 
     return render_template("auction.html", auction=auction, current_user=user, images=images)
 
+@login_required
 @auction.route("/<int:id>/bid", methods=["GET"])
 def bid(id):
-    new_price = request.args.get("amount")
+    new_price = int(request.args.get("amount"))
 
     auction = Auction.query.filter_by(id=id).first()
     car = Car.query.filter_by(id=auction.car_id).first()
     user = User.query.filter_by(id=car.owner_id).first()
-    auction.car = car
-    auction.car.owner = user
-    auction.price = new_price
-    auction.amount_of_bids += 1
 
-    if session.get("user_id"):
-        
-        user_id = session["user_id"]
-        user = User.query.filter_by(id=user_id).first()
-        auction.bidder = user.id
-        db.session.commit()
-
+    if new_price > user.wallet or new_price <= auction.price:
         return redirect(url_for("auction.get", id=id))
 
-    else:
-        return redirect(url_for("auth.login"))
+    auction.car = car
+    auction.car.owner = user
+    
+    if auction.bidder:
+        previous_bidder = User.query.filter_by(id=auction.bidder).first()
+        previous_bidder.wallet += auction.price
+        
+    current_user = User.query.filter_by(id=session["user_id"]).first()    
+    current_user.wallet -= new_price
+    auction.price = new_price
+    auction.bidder = current_user.id
+
+    auction.amount_of_bids += 1
+        
+    db.session.commit()
+
+    return redirect(url_for("auction.get", id=id))
 
 
 @login_required

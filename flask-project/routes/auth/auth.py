@@ -61,7 +61,7 @@ def register_post():
         flash("Username already exists")
         return redirect(url_for("auth.register"))
 
-    user = User(username=username, email=email, password=password)
+    user = User(username=username, email=email, password=password, wallet=0)
     db.session.add(user)
     db.session.commit()
 

@@ -7,6 +7,8 @@ from ...models.car import Car
 from ...models.user import User
 from ...models.images import Images
 
+import uuid
+
 test = Blueprint("test", __name__, static_folder="static",
                  template_folder="templates")
 
@@ -138,21 +140,21 @@ def add_users():
 
 
 def add_cars():
-    car1 = Car(brand="BMW", model="M3", year=2017,
+    car1 = Car(guid=str(uuid.uuid4()),brand="BMW", model="M3", year=2017,
                condition="Good", mileage=150000, owner_id=1)
-    car2 = Car(brand="Audi", model="A4", year=2010,
+    car2 = Car(guid=str(uuid.uuid4()),brand="Audi", model="A4", year=2010,
                condition="Good", mileage=100000, owner_id=2)
-    car3 = Car(brand="Mercedes", model="C200", year=2015,
+    car3 = Car(guid=str(uuid.uuid4()),brand="Mercedes", model="C200", year=2015,
                condition="Good", mileage=50000, owner_id=2)
-    car4 = Car(brand="Audi", model="A3", year=2012,
+    car4 = Car(guid=str(uuid.uuid4()),brand="Audi", model="A3", year=2012,
                condition="Good", mileage=80000, owner_id=1)
-    car5 = Car(brand="BMW", model="M5 Competition", year=2018,
+    car5 = Car(guid=str(uuid.uuid4()),brand="BMW", model="M5 Competition", year=2018,
                condition="Good", mileage=20000, owner_id=3)
-    car6 = Car(brand="Ferrari", model="LaFerrari", year=2018,
+    car6 = Car(guid=str(uuid.uuid4()),brand="Ferrari", model="LaFerrari", year=2018,
                condition="Good", mileage=3000, owner_id=3)
-    car7 = Car(brand="Alfa Romeo", model="Guilia", year=2020,
+    car7 = Car(guid=str(uuid.uuid4()),brand="Alfa Romeo", model="Guilia", year=2020,
                condition="Good", mileage=30000, owner_id=3)
-    car8 = Car(brand="Suzuki", model="Swift", year=2006,
+    car8 = Car(guid=str(uuid.uuid4()),brand="Suzuki", model="Swift", year=2006,
                condition="Good", mileage=250000, owner_id=3)
     db.session.add(car1)
     db.session.add(car2)
