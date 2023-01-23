@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime, timedelta
 from threading import Thread
 
-from random import randint
+from random import randint, choice
 
 def start_new_auctions():
     conn = sqlite3.connect('../../instance/auctions.db')
@@ -18,22 +18,23 @@ def start_new_auctions():
 
         pending_auctions = c.fetchall()
 
-        for auction in pending_auctions:
-            end_date = datetime.now().strftime("%Y-%m-%d")
-            end_date = datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=1)
-            end_date = end_date.strftime("%Y-%m-%d")
+        auction = choice(pending_auctions)
+        
+        end_date = datetime.now().strftime("%Y-%m-%d")
+        end_date = datetime.strptime(end_date, "%Y-%m-%d") + timedelta(days=1)
+        end_date = end_date.strftime("%Y-%m-%d")
 
-            end_time = datetime.now().strftime("%H:%M")
-            end_time = datetime.strptime(end_time, "%H:%M") + timedelta(minutes=5)
-            end_time = end_time.strftime("%H:%M")
+        end_time = datetime.now().strftime("%H:%M")
+        end_time = datetime.strptime(end_time, "%H:%M") + timedelta(minutes=5)
+        end_time = end_time.strftime("%H:%M")
 
-            c.execute("UPDATE auction SET status = 'active', end_date = ?, end_time = ? WHERE id = ?", (end_date, end_time, auction[0]))
+        c.execute("UPDATE auction SET status = 'active', end_date = ?, end_time = ? WHERE id = ?", (end_date, end_time, auction[0]))
 
-            print("Starting auction: ", auction)
+        print("Starting auction: ", auction)
 
-            conn.commit()
+        conn.commit()
 
-            sleep(randint(20, 120))
+        sleep(randint(20, 120))
 
 
 def check_expired_auctions():

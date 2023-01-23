@@ -10,7 +10,7 @@ home = Blueprint("home", __name__, static_folder="static", template_folder="temp
 
 @home.route("/")
 def get():
-    auctions = db.session.query(Auction, Car).join(Car, Auction.car_id == Car.id).order_by(Auction.amount_of_bids.desc()).limit(5).all()
+    auctions = db.session.query(Auction, Car).filter(Auction.status == "active").join(Car, Auction.car_id == Car.id).order_by(Auction.amount_of_bids.desc()).limit(5).all()
 
     for auction in auctions:
         image = Images.query.filter_by(car_id=auction.Car.id).first().image
