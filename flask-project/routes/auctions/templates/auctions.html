@@ -21,13 +21,17 @@
         <div class="content">
             {% for auction in auctions %}
 
-            {% if auction.status == 'active' %}
-
+            {% if auction.Auction.status == 'active' %}
             <div class="card">
-                <h3>{{ auction.car.brand }} {{ auction.car.model}}</h3>
-                <p><strong>Highest bid: € </strong>{{ auction.price }}</p>
-                <p class="remaining"><strong>Ends in: </strong>{{auction.remaining_time}}</p>
-                <button><a href="/auction/{{ auction.id }}">View Auction</a></button>
+                <div class="car-info">
+                    <h3>{{ auction.Car.brand }} {{ auction.Car.model}}</h3>
+                    <p><strong>Highest bid: € </strong>{{ auction.Auction.price }}</p>
+                    <p class="remaining"><strong>Ends in: </strong>{{auction.Auction.remaining_time}}</p>
+                    <p><strong>Location: </strong>{{auction.Auction.location}}</p>
+                </div>
+                <img src="data:image/png;base64,{{ auction.Auction.image }}"
+                    alt="{{auction.Car.brand}} {{auction.Car.model}}">
+                <button><a href="/auction/{{ auction.Auction.id }}">View Auction</a></button>
             </div>
 
             {% endif %}

@@ -28,6 +28,9 @@ def start_new_auctions():
             end_time = end_time.strftime("%H:%M")
 
             c.execute("UPDATE auction SET status = 'active', end_date = ?, end_time = ? WHERE id = ?", (end_date, end_time, auction[0]))
+
+            print("Starting auction: ", auction)
+
             conn.commit()
 
             sleep(randint(20, 120))

@@ -38,11 +38,11 @@ button {
     border: none;
     color: #fff;
     font-size: 14px;
-    box-shadow: 0 7px 0 -4px #b7b7b7;
     transition: all .1s ease;
 }
 
 button:hover {
-    margin: 10px 0;
-    box-shadow: none
+    background-color: #0066ff;
+    box-shadow: 0 7px 0 -4px #b7b7b7;
+    transform: translateY(-2px);
 }
