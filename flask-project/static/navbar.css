@@ -46,3 +46,39 @@ button:hover {
     box-shadow: 0 7px 0 -4px #b7b7b7;
     transform: translateY(-2px);
 }
+
+img {
+    transition: 0.2s;
+    border-radius: 10px;
+}
+
+img:hover {
+    scale: 1.1;
+    transition: 0.2s;
+}
+
+input {
+    margin: 5px 0;
+    padding: 7px 15px;
+    background-color: #0053b3;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    transition: all .1s ease;
+}
+
+input:hover {
+    background-color: #0066ff;
+    box-shadow: 0 7px 0 -4px #b7b7b7;
+    transform: translateY(-2px);
+}
+
+select {
+    margin: 5px 0;
+    padding: 7px 15px;
+    background-color: #0053b3;
+    border: none;
+    color: #fff;
+    font-size: 14px;
+    transition: all .1s ease;
+}

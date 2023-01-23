@@ -1,5 +1,20 @@
 .auction {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    width: 70%;
 }
+
+.auctions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
 
 .content {
     display: flex;
@@ -7,4 +22,19 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+
+img {
+    width: 50%;
+    height: 50%;
+    object-fit: cover;
+    margin: 0 auto;
+    margin-bottom: 2vh;
+}
+
+a {
+    display: block;
+    width: 100%;
 }

@@ -31,15 +31,19 @@ ul {
     flex-wrap: wrap;
 }
 
+a {
+    display: block;
+    width: 100%;
+}
+
 .card img {
     width: 50%;
     height: 50%;
     object-fit: cover;
-    border-radius: 5px;
-    /*center image*/
     margin: 0 auto;
     margin-bottom: 2vh;
 }
+
 
 @media screen and (max-width: 1200px) {
     .card {
