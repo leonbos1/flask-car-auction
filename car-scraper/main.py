@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 from time import sleep
 import requests
 import sqlite3
@@ -19,13 +20,10 @@ def main():
 
     driver.get(AUTOSCOUT_URL)
     sleep(0.5)
-
     accept_cookies(driver)
-
     sleep(0.5)
 
-    # scrape_home_page(driver, cars)
-
+    scrape_home_page(driver, cars)
     search_random_cars(driver, cars)
 
     if SYNC:
@@ -59,12 +57,26 @@ def search_random_cars(driver: webdriver, cars: list):
             except:
                 location = "1072 VH Amsterdam"
 
-            #load images
+            # load images
             scroll += 100
             driver.execute_script(f"window.scrollBy(0, {scroll});")
 
-            img = article.find_element_by_class_name("NewGallery_img__bi92g")
-            image = img.get_attribute("src")
+            sleep(0.2)
+            try:
+                img = article.find_element_by_class_name("NewGallery_img__bi92g")
+                image = img.get_attribute("src")
+            except NoSuchElementException:
+                scroll2 = 0
+                while True:
+                    try:
+                        img = article.find_element_by_class_name(
+                            "NewGallery_img__bi92g")
+                        image = img.get_attribute("src")
+                        break
+                    except:
+                        scroll2 += 100
+                        driver.execute_script(f"window.scrollBy(0, {scroll2});")
+                        sleep(0.5)
 
             request = requests.get(image)
             image = request.content
@@ -75,13 +87,14 @@ def search_random_cars(driver: webdriver, cars: list):
                 mileage = randint(0, 100000)
 
             car = Car(guid=article.get_attribute("data-guid"), brand=article.get_attribute("data-make"), model=article.get_attribute("data-model"), price=article.get_attribute("data-price"), mileage=mileage,
-                    first_registration=convert_to_year(article.get_attribute("data-first-registration")), vehicle_type=article.get_attribute("data-vehicle-type"), location=location, image=image, condition=get_condition(mileage))
+                      first_registration=convert_to_year(article.get_attribute("data-first-registration")), vehicle_type=article.get_attribute("data-vehicle-type"), location=location, image=image, condition=get_condition(mileage))
 
             cars.append(car)
 
-        next_button = driver.find_element_by_xpath("//button[@aria-label='Go to next page']")
+        next_button = driver.find_element_by_xpath(
+            "//button[@aria-label='Go to next page']")
 
-        #make sure the button is visible
+        # make sure the button is visible
         driver.execute_script("window.scrollTo(1200, 0);")
 
         next_button.click()
@@ -184,8 +197,8 @@ def save_cars_to_db(cars: list):
             print(f"Car {car.brand} {car.model} already exists in database")
             continue
 
-        c.execute("INSERT INTO car (guid, brand, model,year,condition,mileage) VALUES (?, ?, ?, ?, ?, ?)",
-                  (car.guid, car.brand, car.model, car.first_registration, car.condition, car.mileage))
+        c.execute("INSERT INTO car (guid, brand, model,year,condition,mileage, vehicle_type) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                  (car.guid, car.brand, car.model, car.first_registration, car.condition, car.mileage, car.vehicle_type))
         conn.commit()
         print(f"Added {car.brand} {car.model} to database")
 
