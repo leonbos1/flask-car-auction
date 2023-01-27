@@ -15,28 +15,38 @@
 
     {% include 'navbar.html' %}
 
-    <div>
+    <div class="container">
 
         <h2>Featured Auctions</h2>
+        <div class="paginate">
+            <form action="/auctions" method="GET">
+                <!--previous and next button-->
+                <button type="submit" name="previous" value="previous">Previous</button>
+                <span>Page {{ page }} of {{ total_pages }}</span>
+                <button type="submit" name="next" value="next">Next</button>
+                <input type="hidden" name="page" value="{{ page }}">
+            </form>
+        </div>
         <div class="content">
-            {% for auction in auctions %}
+            
+                {% for auction in auctions %}
 
-            {% if auction.Auction.status == 'active' %}
-            <div class="card">
-                <div class="car-info">
-                    <h3>{{ auction.Car.brand }} {{ auction.Car.model}}</h3>
-                    <p><strong>Highest bid: € </strong>{{ auction.Auction.price }}</p>
-                    <p class="remaining"><strong>Ends in: </strong>{{auction.Auction.remaining_time}}</p>
-                    <p><strong>Location: </strong>{{auction.Auction.location}}</p>
+                {% if auction.Auction.status == 'active' %}
+                <div class="card">
+                    <div class="car-info">
+                        <h3>{{ auction.Car.brand }} {{ auction.Car.model}}</h3>
+                        <p><strong>Highest bid: € </strong>{{ auction.Auction.price }}</p>
+                        <p class="remaining"><strong>Ends in: </strong>{{auction.Auction.remaining_time}}</p>
+                        <p><strong>Location: </strong>{{auction.Auction.location}}</p>
+                    </div>
+                    <img src="data:image/png;base64,{{ auction.Auction.image }}"
+                        alt="{{auction.Car.brand}} {{auction.Car.model}}">
+                    <button><a href="/auction/{{ auction.Auction.id }}">View Auction</a></button>
                 </div>
-                <img src="data:image/png;base64,{{ auction.Auction.image }}"
-                    alt="{{auction.Car.brand}} {{auction.Car.model}}">
-                <button><a href="/auction/{{ auction.Auction.id }}">View Auction</a></button>
-            </div>
 
-            {% endif %}
+                {% endif %}
 
-            {% endfor %}
+                {% endfor %}
         </div>
     </div>
 

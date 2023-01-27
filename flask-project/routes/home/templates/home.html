@@ -1,33 +1,37 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Car Auction</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="/static/home.css">
 </head>
+
 <body>
     {% include 'navbar.html' %}
 
     <div class="content">
         <h2>Featured Auctions</h2>
         <p>Here are some of the most popular auctions</p>
-        
+
         <div class="auctions">
 
             {% for auction in auctions %}
-                <div class="auction">
-                    <h3>{{ auction.Car.brand }}  {{ auction.Car.model}}</h3>
-                    <p>Current bid: € {{ auction.Auction.price }}</p>
-                    <img src="data:image/png;base64,{{ auction.Car.image }}" alt="{{auction.Car.brand}} {{auction.Car.model}}">
-                    <button><a href="/auction/{{ auction.Auction.id }}">View Auction</a></button>
-                </div>
+            <div class="auction">
+                <h3>{{ auction.Car.brand }} {{ auction.Car.model}}</h3>
+                <p>Current bid: € {{ auction.Auction.price }}</p>
+                <img src="data:image/png;base64,{{ auction.Car.image }}"
+                    alt="{{auction.Car.brand}} {{auction.Car.model}}">
+                <button><a href="/auction/{{ auction.Auction.id }}">View Auction</a></button>
+            </div>
             {% endfor %}
 
         </div>
 
     </div>
-        <p>Copyright © 2023 Car Auction</p>
+    <p>Copyright © 2023 Car Auction</p>
 
 </body>
+
 </html>

@@ -63,3 +63,15 @@ a {
 
 }
 
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}

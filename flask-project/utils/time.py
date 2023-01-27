@@ -6,7 +6,6 @@ def get_remaining_time(end_date: str, end_time: str):
     end_time = end_time.split(":")
 
     end_date = datetime(int(end_date[0]), int(end_date[1]), int(end_date[2]), int(end_time[0]), int(end_time[1]))
-    print(end_date)
     remaining_time = end_date - datetime.now()
 
     remaining_time = str(remaining_time).split(".")[0]
