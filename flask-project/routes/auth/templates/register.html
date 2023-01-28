@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Register</title>
+    <link rel="stylesheet" type="text/css" href="/static/auth.css">
 </head>
+
 <body>
-    {% include 'navbar.html' %}
-    <h1>Register</h1>
-    <form action="register" method="post">
-        <input type="text" name="username" placeholder="Username" />
-        <input type="text" name="email" placeholder="Email" />
-        <input type="password" name="password" placeholder="Password" />
-        <button type="submit" value="Register">Register</button>
-    </form>
+    <div class="container">
+        {% include 'navbar.html' %}
+        <div class="form">
+            <h1>Register</h1>
+            <form action="register" method="post">
+                <input type="text" name="username" placeholder="Username" />
+                <input type="text" name="email" placeholder="Email" />
+                <input type="password" name="password" placeholder="Password" />
+                <button type="submit" value="Register">Register</button>
+                {% if error_message %}
+                <p class="error">{{ error_message }}</p>
+                {% endif %}
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>

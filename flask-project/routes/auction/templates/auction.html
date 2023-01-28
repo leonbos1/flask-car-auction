@@ -17,10 +17,11 @@
 </head>
 
 <body>
+    <div class="container">
 
-    {% include 'navbar.html' %}
+        {% include 'navbar.html' %}
 
-    <div class="content">
+
         <h2>{{auction.car.brand}} {{auction.car.model}}</h2>
         <div class="auction-info">
             <div class="car-info">
@@ -49,11 +50,12 @@
             </div>
             <div data-lon="{{auction.longitute}}" data-lat="{{auction.latitude}}" class="map" id="map"></div>
         </div>
-    </div>
 
-    <footer>
-        <p>Copyright © 2023 Car Auction</p>
-    </footer>
+
+        <footer>
+            <p>Copyright © 2023 Car Auction</p>
+        </footer>
+    </div>
 
 </body>
 <script src="/static/auction.js"></script>

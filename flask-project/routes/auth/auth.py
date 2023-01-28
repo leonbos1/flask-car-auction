@@ -47,7 +47,9 @@ def login_post():
 
 @auth.route("/register", methods=["GET"])
 def register():
-    return render_template("register.html")
+    error_message = request.args.get("error_message")
+
+    return render_template("register.html", error_message=error_message)
 
 
 @auth.route("/register", methods=["POST"])
@@ -58,14 +60,19 @@ def register_post():
 
     user = User.query.filter_by(username=username).first()
     if user:
-        flash("Username already exists")
-        return redirect(url_for("auth.register"))
+        error_message = "Username already exists"
+        return redirect(url_for("auth.register", error_message=error_message))
 
     user = User(username=username, email=email, password=password, wallet=0)
     db.session.add(user)
     db.session.commit()
 
-    return redirect(url_for("auth.auctions"))
+    return redirect(url_for("auctions.get"))
+
+@auth.route("/logout", methods=["GET"])
+def logout():
+    logout_user()
+    return redirect(url_for("auth.login"))
 
 
 def login_user(user):

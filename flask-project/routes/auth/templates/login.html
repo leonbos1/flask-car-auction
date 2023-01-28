@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Log In</title>
+    <link rel="stylesheet" type="text/css" href="/static/auth.css">
 </head>
+
 <body>
-    {% include 'navbar.html' %}
-    <h1>Log In</h1>
-    <form action="login" method="post">
-        <input type="text" name="username" placeholder="Username" />
-        <input type="password" name="password" placeholder="Password" />
-        <button type="submit" value="Log In"> Log In </button>
-    </form>
+    <div class="container">
+        {% include 'navbar.html' %}
+        <div class="form">
+            <h1>Log In</h1>
+            <form action="login" method="post">
+                <input type="text" name="username" placeholder="Username" />
+                <input type="password" name="password" placeholder="Password" />
+                <button type="submit" value="Log In"> Log In </button>
+            </form>
+        </div>
+    </div>
 </body>
+
 </html>
