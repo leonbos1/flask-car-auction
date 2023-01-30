@@ -5,10 +5,11 @@
     <title>Log In</title>
     <link rel="stylesheet" type="text/css" href="/static/auth.css">
 </head>
+    
+        {% extends 'navbar.html' %}
 
-<body>
-    <div class="container">
-        {% include 'navbar.html' %}
+        {% block body %}
+
         <div class="form">
             <h1>Log In</h1>
             <form action="login" method="post">
@@ -17,7 +18,7 @@
                 <button type="submit" value="Log In"> Log In </button>
             </form>
         </div>
-    </div>
-</body>
+
+        {% endblock %}
 
 </html>

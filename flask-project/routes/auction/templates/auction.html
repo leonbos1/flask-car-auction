@@ -16,46 +16,43 @@
 </html>
 </head>
 
-<body>
-    <div class="container">
+{% extends 'navbar.html' %}
 
-        {% include 'navbar.html' %}
+{% block body %}
 
-
-        <h2>{{auction.car.brand}} {{auction.car.model}}</h2>
-        <div class="auction-info">
-            <div class="car-info">
-                <div class="auction-details">
-                    <p><strong>Current bid:</strong> {{auction.price}}</p>
-                    {% if auction.bidder %}
-                    <p><strong>Highest bidder:</strong> {{auction.bidder_name.username}}</p>
-                    {% endif %}
-                    <p class="remaining"><strong>Ends in:</strong> {{auction.remaining_time}}</p>
-                    <p><strong>Location:</strong> {{auction.location}}</p>
-                    {% if auction.car.owner_id != current_user.id and auction.bidder != current_user.id %}
-                    <button class="bid"><a href="/auction/{{auction.id}}/bid?amount={{auction.price + 500}}">Bid
-                            {{auction.price + 500}}</a></button>
-                    {% endif %}
-                </div>
-                <div class="car-details">
-                    <p><strong>Condition:</strong> {{auction.car.condition}}</p>
-                    <p><strong>Year:</strong> {{auction.car.year}}</p>
-                    <p><strong>Mileage:</strong> {{auction.car.mileage}}</p>
-                </div>
-                <div class="car-images">
-                    {% for image in images %}
-                    <img src="data:image/png;base64,{{ image.data }}" alt="{{auction.car.brand}} {{auction.car.model}}">
-                    {% endfor %}
-                </div>
-            </div>
-            <div data-lon="{{auction.longitute}}" data-lat="{{auction.latitude}}" class="map" id="map"></div>
+<h2>{{auction.car.brand}} {{auction.car.model}}</h2>
+<div class="auction-info">
+    <div class="car-info">
+        <div class="auction-details">
+            <p><strong>Current bid:</strong> {{auction.price}}</p>
+            {% if auction.bidder %}
+            <p><strong>Highest bidder:</strong> {{auction.bidder_name.username}}</p>
+            {% endif %}
+            <p class="remaining"><strong>Ends in:</strong> {{auction.remaining_time}}</p>
+            <p><strong>Location:</strong> {{auction.location}}</p>
+            {% if auction.car.owner_id != current_user.id and auction.bidder != current_user.id %}
+            <button class="bid"><a href="/auction/{{auction.id}}/bid?amount={{auction.price + 500}}">Bid
+                    {{auction.price + 500}}</a></button>
+            {% endif %}
         </div>
-
-
-        <footer>
-            <p>Copyright © 2023 Car Auction</p>
-        </footer>
+        <div class="car-details">
+            <p><strong>Condition:</strong> {{auction.car.condition}}</p>
+            <p><strong>Year:</strong> {{auction.car.year}}</p>
+            <p><strong>Mileage:</strong> {{auction.car.mileage}}</p>
+        </div>
+        <div class="car-images">
+            {% for image in images %}
+            <img src="data:image/png;base64,{{ image.data }}" alt="{{auction.car.brand}} {{auction.car.model}}">
+            {% endfor %}
+        </div>
     </div>
+    <div data-lon="{{auction.longitute}}" data-lat="{{auction.latitude}}" class="map" id="map"></div>
+</div>
 
-</body>
+
+<footer>
+    <p>Copyright © 2023 Car Auction</p>
+</footer>
+{% endblock %}
+
 <script src="/static/auction.js"></script>

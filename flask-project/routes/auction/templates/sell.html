@@ -10,36 +10,34 @@
 
 </html>
 
-<body>
+{% extends 'navbar.html' %}
 
-    <div class="container">
-        {% include 'navbar.html' %}
+{% block body %}
 
-        <h1>Sell a Car</h1>
+<h1>Sell a Car</h1>
 
-        <form action="sell" method="post" enctype="multipart/form-data">
+<form action="sell" method="post" enctype="multipart/form-data">
 
-            <select name="car">
-                {% for car in cars %}
-                <option value="{{ car.id }}">{{ car.brand }} {{ car.model }}</option>
-                {% endfor %}
-            </select>
+    <select name="car">
+        {% for car in cars %}
+        <option value="{{ car.id }}">{{ car.brand }} {{ car.model }}</option>
+        {% endfor %}
+    </select>
 
-            <input type="text" name="price" placeholder="Price" />
+    <input type="text" name="price" placeholder="Price" />
 
-            <input type="date" name="end_date" placeholder="End Date" />
+    <input type="date" name="end_date" placeholder="End Date" />
 
-            <input type="time" name="end_time" placeholder="End Time" />
+    <input type="time" name="end_time" placeholder="End Time" />
 
-            <input type="text" name="location" placeholder="Location" />
+    <input type="text" name="location" placeholder="Location" />
 
-            <input type="file" name="images" multiple placeholder="Images" />
+    <input type="file" name="images" multiple placeholder="Images" />
 
-            <button type="submit">Sell</button>
+    <button type="submit">Sell</button>
 
-        </form>
-    </div>
+</form>
 
-</body>
+{% endblock %}
 
 </html>

@@ -6,9 +6,10 @@
     <link rel="stylesheet" type="text/css" href="/static/auth.css">
 </head>
 
-<body>
-    <div class="container">
-        {% include 'navbar.html' %}
+        {% extends 'navbar.html' %}
+
+        {% block body %}
+
         <div class="form">
             <h1>Register</h1>
             <form action="register" method="post">
@@ -21,7 +22,6 @@
                 {% endif %}
             </form>
         </div>
-    </div>
-</body>
+        {% endblock %}
 
 </html>

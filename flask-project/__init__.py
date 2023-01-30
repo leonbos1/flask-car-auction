@@ -9,6 +9,8 @@ from .routes.profile.profile import profile
 from .extensions import db
 from .services.auction_service import check_expired_auctions
 
+from threading import Thread
+
 def create_app():
     app = Flask(__name__)
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///auctions.db"
@@ -18,10 +20,7 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        #change database tables 
         db.create_all()
-
-        
 
     app.register_blueprint(auctions, url_prefix="/auctions")
     app.register_blueprint(auction, url_prefix="/auction")
@@ -29,5 +28,8 @@ def create_app():
     app.register_blueprint(test, url_prefix="/test")
     app.register_blueprint(home, url_prefix="")
     app.register_blueprint(profile, url_prefix="/profile")
+
+    thread = Thread(target=check_expired_auctions)
+    thread.start()
 
     return app
