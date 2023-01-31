@@ -1,14 +1,3 @@
-li {
-    margin-right: 10px;
-}
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-}
-
 .content {
     display: flex;
     flex-wrap: wrap;
@@ -16,7 +5,6 @@ ul {
     width: 100%;
     margin: 0 auto;
 }
-
 
 .card {
     border-radius: 5px;
@@ -29,11 +17,6 @@ ul {
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-}
-
-a {
-    display: block;
-    width: 100%;
 }
 
 .card img {
@@ -67,13 +50,4 @@ a {
     display: flex;
     justify-content: center;
     margin: 20px;
-}
-
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 80%;
-    margin: 0 auto;
 }
