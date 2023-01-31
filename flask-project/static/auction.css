@@ -59,3 +59,12 @@ img {
     width: 80%;
     margin: 0 auto;
 }
+
+.error {
+    color: red;
+}
+
+.owned {
+    color: green;
+    
+}

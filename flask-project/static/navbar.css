@@ -5,6 +5,7 @@ nav {
     padding: 10px 20px;
     width: 100%;
     border-bottom: 1px solid rgb(0, 0, 0);
+    height: 50px;
 }
 
 ul {
@@ -12,15 +13,22 @@ ul {
     margin: 0;
     padding: 0;
     display: flex;
+    align-items: center;
 }
 
 li {
-    margin-right: 10px;
+    margin-right: 30px;
 }
 
 a {
     color: #fff;
     text-decoration: none;
+}
+
+.sell {
+    background-color: rgba(72, 255, 0, 0.562);
+    padding: 10px 20px;
+    border-radius: 20px;
 }
 
 body {

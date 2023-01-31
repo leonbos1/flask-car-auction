@@ -25,6 +25,8 @@ def get(id):
 
     auction.remaining_time = get_remaining_time(auction.end_date, auction.end_time)
 
+    error_message = request.args.get("error_message")
+
     if session.get("user_id"):
         user_id = session["user_id"]
         user = User.query.filter_by(id=user_id).first()
@@ -33,7 +35,7 @@ def get(id):
     for image in images:
         image.data = base64.b64encode(image.image).decode('ascii')
 
-    return render_template("auction.html", auction=auction, current_user=user, images=images)
+    return render_template("auction.html", auction=auction, current_user=user, images=images, error_message=error_message)
 
 @login_required
 @auction.route("/<int:id>/bid", methods=["GET"])
@@ -45,7 +47,7 @@ def bid(id):
     current_user = get_user() 
 
     if new_price > current_user.wallet or new_price <= auction.price:
-        return redirect(url_for("auction.get", id=id))
+        return redirect(url_for("auction.get", id=id, error_message="You don't have enough money to bid on this car"))
 
     auction.car = car
     auction.car.owner = current_user
