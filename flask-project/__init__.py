@@ -6,6 +6,8 @@ from .routes.test.test import test
 from .routes.home.home import home
 from .routes.profile.profile import profile
 
+from .routes.auth.auth import login_manager
+
 from .extensions import db
 from .services.auction_service import check_expired_auctions
 
@@ -19,6 +21,8 @@ def create_app():
 
     db.init_app(app)
 
+    login_manager.init_app(app)
+
     with app.app_context():
         db.create_all()
 
@@ -28,8 +32,5 @@ def create_app():
     app.register_blueprint(test, url_prefix="/test")
     app.register_blueprint(home, url_prefix="")
     app.register_blueprint(profile, url_prefix="/profile")
-
-    thread = Thread(target=check_expired_auctions)
-    thread.start()
 
     return app

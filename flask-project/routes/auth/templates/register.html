@@ -13,10 +13,10 @@
         <div class="form">
             <h1>Register</h1>
             <form action="register" method="post">
-                <input type="text" name="username" placeholder="Username" />
-                <input type="text" name="email" placeholder="Email" />
-                <input type="password" name="password" placeholder="Password" />
-                <button type="submit" value="Register">Register</button>
+                <input tabindex="1" type="text" name="username" placeholder="Username" />
+                <input tabindex="1" type="text" name="email" placeholder="Email" />
+                <input tabindex="1" type="password" name="password" placeholder="Password" />
+                <button tabindex="1" type="submit" value="Register">Register</button>
                 {% if error_message %}
                 <p class="error">{{ error_message }}</p>
                 {% endif %}

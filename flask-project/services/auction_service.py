@@ -38,7 +38,7 @@ def start_new_auctions():
 
 
 def check_expired_auctions():
-    conn = sqlite3.connect('./instance/auctions.db')
+    conn = sqlite3.connect('../../instance/auctions.db')
     c = conn.cursor()
     print("Starting auction service...")
 

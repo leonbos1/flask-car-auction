@@ -8,10 +8,8 @@ from ...models.images import Images
 from ...utils.time import get_remaining_time, date_is_future, get_future_date
 from ...utils.location import get_latitude_longitude
 
-from ..auth.auth import login_required
+from ..auth.auth import login_required, get_user
 
-import requests
-import json
 import base64
 
 auction = Blueprint("auction", __name__, static_folder="static", template_folder="templates")
@@ -20,7 +18,7 @@ auction = Blueprint("auction", __name__, static_folder="static", template_folder
 def get(id):
     auction = Auction.query.filter_by(id=id).first()
     car = Car.query.filter_by(id=auction.car_id).first()
-    user = User.query.filter_by(id=car.owner_id).first()
+    user = get_user()
     auction.bidder_name = User.query.filter_by(id=auction.bidder).first()
     auction.car = car
     auction.car.owner = user
@@ -44,14 +42,13 @@ def bid(id):
 
     auction = Auction.query.filter_by(id=id).first()
     car = Car.query.filter_by(id=auction.car_id).first()
-    user = User.query.filter_by(id=car.owner_id).first()
-    current_user = User.query.filter_by(id=session["user_id"]).first()    
+    current_user = get_user() 
 
     if new_price > current_user.wallet or new_price <= auction.price:
         return redirect(url_for("auction.get", id=id))
 
     auction.car = car
-    auction.car.owner = user
+    auction.car.owner = current_user
     
     if auction.bidder:
         previous_bidder = User.query.filter_by(id=auction.bidder).first()
@@ -72,10 +69,7 @@ def bid(id):
 @login_required
 @auction.route("/sell", methods=["GET"])
 def sell():
-    if not session.get("user_id"):
-        return redirect(url_for("auth.login"))
-
-    user = User.query.filter_by(id=session["user_id"]).first()
+    user = get_user()
 
     if not user:
         return redirect(url_for("auth.login"))

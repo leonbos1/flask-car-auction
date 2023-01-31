@@ -25,6 +25,8 @@ def get():
     total_pages = db.session.query(Auction).filter(
         Auction.status == "active").paginate(page=page, per_page=10).pages
 
+    if total_pages == 0: total_pages = 1
+
     if next and page < total_pages:
         page += 1
     elif previous and page > 1:
