@@ -72,11 +72,12 @@ def bid(id):
 @auction.route("/sell", methods=["GET"])
 def sell():
     user = get_user()
-
-    if not user:
+    try:
+        user_id = user.id
+    except:
         return redirect(url_for("auth.login"))
 
-    cars = Car.query.filter_by(owner_id=user.id).all()
+    cars = Car.query.filter_by(owner_id=user_id).all()
 
     cars = [car for car in cars if not Auction.query.filter_by(
         car_id=car.id).filter_by(status="active").first()]

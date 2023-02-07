@@ -6,15 +6,13 @@ from ...models.auction import Auction
 from ...models.car import Car
 from ...models.images import Images
 
+from ...queries.auction import get_top_5_auctions
+
 home = Blueprint("home", __name__, static_folder="static", template_folder="templates")
 
 @home.route("/")
 def get():
-    auctions = db.session.query(Auction, Car).filter(Auction.status == "active").join(Car, Auction.car_id == Car.id).order_by(Auction.amount_of_bids.desc()).limit(5).all()
-
-    for auction in auctions:
-        image = Images.query.filter_by(car_id=auction.Car.id).first().image
-        auction.Car.image = base64.b64encode(image).decode('ascii')
+    auctions = get_top_5_auctions()
 
     return render_template("home.html", auctions=auctions)
 
