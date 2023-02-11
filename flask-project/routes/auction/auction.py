@@ -16,6 +16,9 @@ auction = Blueprint("auction", __name__, static_folder="static", template_folder
 
 @auction.route("/<int:id>", methods=["GET"])
 def get(id):
+    """
+    Get auction by id
+    """
     auction = Auction.query.filter_by(id=id).first()
     car = Car.query.filter_by(id=auction.car_id).first()
     user = get_user()
@@ -40,6 +43,9 @@ def get(id):
 @login_required
 @auction.route("/<int:id>/bid", methods=["GET"])
 def bid(id):
+    """
+    Bid on auction
+    """
     new_price = int(request.args.get("amount"))
 
     auction = Auction.query.filter_by(id=id).first()
@@ -71,6 +77,9 @@ def bid(id):
 @login_required
 @auction.route("/sell", methods=["GET"])
 def sell():
+    """
+    Get sell page
+    """
     user = get_user()
     try:
         user_id = user.id
@@ -87,6 +96,9 @@ def sell():
 @login_required
 @auction.route("/sell", methods=["POST"])
 def sell_car():
+    """
+    Sell car
+    """
     car_id = request.form.get("car")
     price = request.form.get("price")
     end_date = request.form.get("end_date")
